@@ -4,68 +4,60 @@ import {
     useHistory
   } from "react-router-dom";
 import { createDeck } from "../utils/api/index"
+import DeckForm from "./DeckForm";
 
-function CreateDeck () {
+function CreateDeck() {
   const history = useHistory();
-  const initialFormState = {
-    name: "",
-    description: "",
-  };
-  const [formData, setFormData] = useState({...initialFormState});
- console.log(formData);
-  const handleChange = ({ target }) => {  
-    const value = target.value;
-    setFormData({
-      ...formData,
-      [target.name]: value,
-    });
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    createDeck(formData);  
-    setFormData({ ...initialFormState });
-    history.push("/");
-  };
+  const [deck, setDeck] = useState({});
+
+  const name = deck.name ? deck.name : "Deck Name";
+
+  function handleSubmit(deck) {
+    const abortController = new AbortController();
+    async function addDeck() {
+      try {
+        const deckInfo = await createDeck(deck, abortController.signal);
+        history.push(`/decks/${deckInfo.id}`);
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.info("aborted");
+        } else {
+          throw err;
+        }
+      }
+    }
+    addDeck();
+    return () => {
+      abortController.abort();
+    };
+  }
+
+  function handleCancel() {
+    history.push(`/`);
+  }
+
   return (
     <div>
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/" className="btn btn-link">Home</Link>
-        </li>
-        <li className="breadcrumb-item">
-          Create Deck
-        </li>
-      </ol>
-    </nav>
-    <h1>Create Deck</h1>
-      <form name="create" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Name"
-            onChange={handleChange}
-            value={formData.name}
-          ></input>
-      </div>
-      <div className="form-group">
-        <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Description"
-            onChange={handleChange}
-            value={formData.description}
-          ></textarea>
-        <button type="submit" className="btn btn-primary my-2">Submit</button> 
-        <Link to="/" className="btn btn-secondary my-2">Cancel</Link>
-        </div>
-      </form>
+      <nav aria-label='breadcrumb'>
+        <ol className='breadcrumb'>
+          <li className='breadcrumb-item'>
+            <Link to='/'>
+              <i className='bi bi-house-door-fill'></i> Home
+            </Link>
+          </li>
+          <li className='breadcrumb-item active' aria-current='page'>
+            Create Deck
+          </li>
+        </ol>
+      </nav>
+      <h1>Create Deck</h1>
+      <DeckForm
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
+        deck={deck}
+      />
     </div>
-  )
+  );
 };
 
 export default CreateDeck;

@@ -14,6 +14,43 @@ function CardForm({ handleSubmit, handleCancel, card }) {
     handleSubmit(cardInfo);
     setCardInfo({});
   };
+  if (!cardInfo) {
+    return (
+      <form onSubmit={submit}>
+        <div className='form-group'>
+          <label htmlFor='front'>Front</label>
+          <textarea
+            className='form-control'
+            type='text'
+            id='front'
+            name='front'
+            placeholder='Front of Card'
+            value={""}
+            onChange={updateForm}
+            required
+          ></textarea>
+        </div>
+        <div className='form-group'>
+          <label htmlFor='back'>Back</label>
+          <textarea
+            className='form-control'
+            name='back'
+            id='back'
+            placeholder='Back of Card'
+            value={""}
+            onChange={updateForm}
+            required
+          ></textarea>
+          <button className='btn btn-secondary my-2' onClick={handleCancel}>
+            Cancel
+          </button>
+          <button type='submit' className='btn btn-primary my-2'>
+            Submit
+          </button>
+        </div>
+      </form>
+    );
+    } else {
   return (
     <form onSubmit={submit}>
       <div className='form-group'>
@@ -24,7 +61,7 @@ function CardForm({ handleSubmit, handleCancel, card }) {
           id='front'
           name='front'
           placeholder='Front of Card'
-          value={cardInfo?.front || ""}
+          value={cardInfo.front}
           onChange={updateForm}
           required
         ></textarea>
@@ -36,7 +73,7 @@ function CardForm({ handleSubmit, handleCancel, card }) {
           name='back'
           id='back'
           placeholder='Back of Card'
-          value={cardInfo?.back || ""}
+          value={cardInfo.back}
           onChange={updateForm}
           required
         ></textarea>
@@ -49,6 +86,7 @@ function CardForm({ handleSubmit, handleCancel, card }) {
       </div>
     </form>
   );
+  }
 }
 
 export default CardForm;
