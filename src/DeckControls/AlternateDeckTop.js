@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { deleteDeck } from "../utils/api/index";
 
 function AlternateDeckTop({deck}) {
+    const history = useHistory();
     const handleDelete = async () => {
         const result = window.confirm("Delete this deck? You will not be able to recover it.");
         if (result) {
           await deleteDeck(deck.id);
+          history.push("/");
         }
       };
 

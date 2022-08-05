@@ -41,7 +41,7 @@ function EditCard() {
     }
     loadCard();
     return () => abortController.abort();
-  }, [cardId]);
+  }, [cardId, deckId]);
 
 
     async function handleSubmit(card) {

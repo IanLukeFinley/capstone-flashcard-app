@@ -14,6 +14,7 @@ function CardForm({ handleSubmit, handleCancel, card }) {
     handleSubmit(cardInfo);
     setCardInfo({});
   };
+
   if (!cardInfo) {
     return (
       <form onSubmit={submit}>
@@ -51,8 +52,9 @@ function CardForm({ handleSubmit, handleCancel, card }) {
       </form>
     );
     } else {
+
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={submit}>   
       <div className='form-group'>
         <label htmlFor='front'>Front</label>
         <textarea
@@ -62,7 +64,7 @@ function CardForm({ handleSubmit, handleCancel, card }) {
           name='front'
           placeholder='Front of Card'
           value={cardInfo.front}
-          onChange={updateForm}
+          onChange={updateForm}  //never have problems here...
           required
         ></textarea>
       </div>

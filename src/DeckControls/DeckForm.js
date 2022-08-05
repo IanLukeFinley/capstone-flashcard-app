@@ -23,7 +23,7 @@ function DeckForm({ handleSubmit, handleCancel, deck }) {
           id='name'
           name='name'
           placeholder='Deck Name'
-          value={deckInfo.name}
+          value={deckInfo?.name || ""}
           onChange={updateForm}
           required
         ></input>
@@ -35,7 +35,7 @@ function DeckForm({ handleSubmit, handleCancel, deck }) {
           name='description'
           id='description'
           placeholder='Brief description of the deck'
-          value={deckInfo.description}
+          value={deckInfo?.description || ""}
           onChange={updateForm}
           required
         ></textarea>

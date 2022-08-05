@@ -1,10 +1,8 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Link,
   Route,
   Switch,
-  useLocation,
 } from "react-router-dom";
 import Header from "./Header";
 import NotFound from "../Layout/NotFound";

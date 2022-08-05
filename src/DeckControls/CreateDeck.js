@@ -10,13 +10,14 @@ function CreateDeck() {
   const history = useHistory();
   const [deck, setDeck] = useState({});
 
-  const name = deck.name ? deck.name : "Deck Name";
+ // const name = deck.name ? deck.name : "Deck Name";
 
   function handleSubmit(deck) {
     const abortController = new AbortController();
     async function addDeck() {
       try {
         const deckInfo = await createDeck(deck, abortController.signal);
+        setDeck(deckInfo);
         history.push(`/decks/${deckInfo.id}`);
       } catch (err) {
         if (err.name === "AbortError") {

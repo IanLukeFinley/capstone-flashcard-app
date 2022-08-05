@@ -7,7 +7,7 @@ function CardList ({deck}) {
   const [cards, setCards] = useState([]);
   useEffect(() => {
   setCards(deck.cards);
-  }, []);
+  }, [deck]);
 
   const list = cards.map((card) => <Card card={card} key={card.id} />);
 

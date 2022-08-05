@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  Route,
-  Switch,
   Link,
   useParams,
-  NavLink,
-  useRouteMatch,
 } from "react-router-dom";
 import { readDeck } from "../utils/api/index";
 import AlternateDeckTop from "./AlternateDeckTop";
